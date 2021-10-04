@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <contextName>logback</contextName>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+            <charset>${CONSOLE_LOG_CHARSET}</charset>
+        </encoder>
+    </appender>
+
+    <appender name="MASK" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <charset>${CONSOLE_LOG_CHARSET}</charset>
+            <layout class="cn.shaojiel.logback.MaskingPatternLayout">
+                <!-- JSON mask pattern -->
+                <maskPattern>\"password\"\s*:\s*\"(.*?)\"</maskPattern>
+
+                <!-- Object mask pattern -->
+                <maskPattern>password\s*=\s*(.*?)\s*[,|\)]</maskPattern>
+
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <logger name="cn.shaojiel.logback" level="INFO" additivity="false">
+        <appender-ref ref="MASK"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
