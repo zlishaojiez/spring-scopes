@@ -1,5 +1,5 @@
 # Spring-Scopes
-spring scopes practice
+spring scopes exercise
 
 
 1.  ## injecting-prototype-beans
